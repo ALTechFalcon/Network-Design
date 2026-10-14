@@ -1,0 +1,17 @@
+From,To,Protocol,Port,Expected,Why
+Users,Servers,tcp,443,allow,Rule 1: analyst opens collector page
+Users,Servers,tcp,22,deny,Users may not SSH to servers
+Users,Lab,tcp,22,allow,Rule 2: analyst SSH to lab target
+Users,Lab,tcp,80,allow,Rule 2: analyst browses web target
+Users,Lab,tcp,3306,deny,Database port not opened
+Lab,Servers,udp,514,allow,Rule 3: log forwarding
+Lab,Servers,tcp,443,deny,Lab may only send syslog
+Lab,Users,tcp,22,deny,Rule 4: lab cannot reach analyst
+Lab,Users,icmp,0,deny,Rule 4 also blocks ping
+Lab,Internet,tcp,443,deny,Rule 5: nothing leaves the lab
+Lab,Internet,udp,53,deny,Rule 5: no DNS out either
+MgmtHost,Firewall,tcp,443,allow,Rule 6: admin access
+Users,Firewall,tcp,443,deny,Only MgmtHost may administer
+Lab,Firewall,tcp,443,deny,Lab cannot touch the firewall
+Servers,Lab,tcp,22,deny,Servers do not initiate to lab
+Servers,Internet,tcp,443,deny,Default deny

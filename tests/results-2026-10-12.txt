@@ -1,0 +1,18 @@
+PASS     Users -> Servers   tcp/443  expected allow got allow (rule 1)  Rule 1: analyst opens collector page
+PASS     Users -> Servers   tcp/22   expected deny  got deny  (rule 7)  Users may not SSH to servers
+PASS     Users -> Lab       tcp/22   expected allow got allow (rule 2)  Rule 2: analyst SSH to lab target
+PASS     Users -> Lab       tcp/80   expected allow got allow (rule 2)  Rule 2: analyst browses web target
+PASS     Users -> Lab       tcp/3306 expected deny  got deny  (rule 7)  Database port not opened
+PASS       Lab -> Servers   udp/514  expected allow got allow (rule 3)  Rule 3: log forwarding
+PASS       Lab -> Servers   tcp/443  expected deny  got deny  (rule 7)  Lab may only send syslog
+PASS       Lab -> Users     tcp/22   expected deny  got deny  (rule 4)  Rule 4: lab cannot reach analyst
+PASS       Lab -> Users     icmp/0    expected deny  got deny  (rule 4)  Rule 4 also blocks ping
+PASS       Lab -> Internet  tcp/443  expected deny  got deny  (rule 5)  Rule 5: nothing leaves the lab
+PASS       Lab -> Internet  udp/53   expected deny  got deny  (rule 5)  Rule 5: no DNS out either
+PASS  MgmtHost -> Firewall  tcp/443  expected allow got allow (rule 6)  Rule 6: admin access
+PASS     Users -> Firewall  tcp/443  expected deny  got deny  (rule 7)  Only MgmtHost may administer
+PASS       Lab -> Firewall  tcp/443  expected deny  got deny  (rule 7)  Lab cannot touch the firewall
+PASS   Servers -> Lab       tcp/22   expected deny  got deny  (rule 7)  Servers do not initiate to lab
+PASS   Servers -> Internet  tcp/443  expected deny  got deny  (rule 7)  Default deny
+
+All expectations hold

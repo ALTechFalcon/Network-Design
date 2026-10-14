@@ -1,0 +1,8 @@
+No,From,To,Protocol,Ports,Action,Reason
+1,Users,Servers,tcp,443,allow,Open the log collector web page
+2,Users,Lab,tcp,"22,80,443",allow,Analyst tests the lab machines
+3,Lab,Servers,udp,514,allow,Lab machines send logs to the collector
+4,Lab,Users,any,any,deny,A compromised target must not reach the analyst
+5,Lab,Internet,any,any,deny,Nothing leaves the lab
+6,MgmtHost,Firewall,tcp,443,allow,Only one host administers the firewall
+7,any,any,any,any,deny,Default deny and log
